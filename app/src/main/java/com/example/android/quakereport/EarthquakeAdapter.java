@@ -18,6 +18,7 @@ package com.example.android.quakereport;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,19 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         // Format the magnitude to show 1 decimal place
         String formattedMagnitude = formatMagnitude(currentEarthquake.getMagnitude());
         // Display the magnitude of the current earthquake in that TextView
-        magnitudeView.setText(formattedMagnitude);
+
+        double freeOrBusy = currentEarthquake.getMagnitude();
+        //Log.v("sa dea dracii", "freeOrBusy = " + freeOrBusy);
+
+        //float freeOrOpen = Float.parseFloat(formattedMagnitude);
+        if(freeOrBusy < 30){
+            magnitudeView.setText(R.string.free_spot);
+        }else{
+            magnitudeView.setText(R.string.busy_spot);
+        }
+
+        //magnitudeView.setText(formattedMagnitude);
+
 
         // Set the proper background color on the magnitude circle.
         // Fetch the background from the TextView, which is a GradientDrawable.

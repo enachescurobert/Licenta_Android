@@ -53,6 +53,9 @@ public class EarthquakeActivity extends AppCompatActivity
     private static final String THINGSPEAK_DUMMY_SENSOR =
             "https://thingspeak.com/channels/54807/field/1.json";
 
+    private static final String THINGSPEAK_LICENTA =
+            "https://thingspeak.com/channels/802603/feed.json";
+
 
     /**
      * Constant value for the earthquake loader ID. We can choose any integer.
@@ -176,7 +179,10 @@ public class EarthquakeActivity extends AppCompatActivity
         uriBuilder.appendQueryParameter("minmag", minMagnitude);
         uriBuilder.appendQueryParameter("orderby", orderBy);
 
-        return new EarthquakeLoader(this, THINGSPEAK_DUMMY_SENSOR);
+
+        return new EarthquakeLoader(this, THINGSPEAK_LICENTA);
+
+//        return new EarthquakeLoader(this, THINGSPEAK_DUMMY_SENSOR);
     }
 
     @Override

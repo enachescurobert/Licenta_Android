@@ -174,10 +174,13 @@ public final class QueryUtils {
 
 
             // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
-            for (int i = 0; i < earthquakeArray.length(); i++) {
+//            for (int i = 0; i < earthquakeArray.length(); i++) {
 
                 // Get a single earthquake at position i within the list of earthquakes
-                JSONObject currentEarthquake = earthquakeArray.getJSONObject(i);
+
+                int lastEntry = earthquakeArray.length();
+
+                JSONObject currentEarthquake = earthquakeArray.getJSONObject(lastEntry - 1);
 
                 // For a given earthquake, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
@@ -187,9 +190,16 @@ public final class QueryUtils {
                 // Extract the value for the key called "mag"
                 double magnitude = currentEarthquake.getDouble("field1");
 
+                double magnitude2 = currentEarthquake.getDouble("field2");
+
+                double magnitude3 = currentEarthquake.getDouble("field3");
+
                 // Extract the value for the key called "place"
                 //String location = properties.getString("place");
                 String location = currentEarthquake.getString("entry_id");
+                String locUnu = "Loc de parcare 1";
+                String locDoi = "Loc de parcare 2";
+                String locTrei = "Loc de parcare 3";
 
                 // Extract the value for the key called "time"
                 //long time = properties.getLong("time");
@@ -198,15 +208,21 @@ public final class QueryUtils {
 
                 // Extract the value for the key called "url"
                 //String url = properties.getString("url");
-                String url = "https://thingspeak.com/channels/54807/field/1.json";
+                String url = "https://play.google.com/store/apps/developer?id=Enachescu+Robert";
 
                 // Create a new {@link Earthquake} object with the magnitude, location, time,
                 // and url from the JSON response.
-                Earthquake earthquake = new Earthquake(magnitude, location, time, url);
+                Earthquake earthquake = new Earthquake(magnitude, locUnu, time, url);
+                Earthquake earthquake2 = new Earthquake(magnitude2, locDoi, time, url);
+                Earthquake earthquake3 = new Earthquake(magnitude3, locTrei, time, url);
 
-                // Add the new {@link Earthquake} to the list of earthquakes.
+
+            // Add the new {@link Earthquake} to the list of earthquakes.
                 earthquakes.add(earthquake);
-            }
+                earthquakes.add(earthquake2);
+                earthquakes.add(earthquake3);
+
+//            }
 
         } catch (JSONException e) {
             // If an error is thrown when executing any of the above statements in the "try" block,

@@ -82,7 +82,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         //Log.v("sa dea dracii", "freeOrBusy = " + freeOrBusy);
 
         //float freeOrOpen = Float.parseFloat(formattedMagnitude);
-        if(freeOrBusy < 30){
+        if(freeOrBusy == 0){
             magnitudeView.setText(R.string.free_spot);
         }else{
             magnitudeView.setText(R.string.busy_spot);
@@ -169,7 +169,7 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         int magnitudeFloor = (int) Math.floor(magnitude);
 
 
-        if(magnitudeFloor < 30){
+        if(magnitudeFloor == 0){
             magnitudeColorResourceId = R.color.magnitude2;
         }else{
             magnitudeColorResourceId = R.color.magnitude8;

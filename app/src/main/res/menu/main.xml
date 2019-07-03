@@ -21,5 +21,6 @@
         android:title="@string/settings_menu_item"
         android:icon="@drawable/ic_filter"
         android:orderInCategory="1"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom"
+        android:visible="false"/>
 </menu>

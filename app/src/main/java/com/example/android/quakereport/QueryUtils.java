@@ -194,6 +194,8 @@ public final class QueryUtils {
 
                 double magnitude3 = currentEarthquake.getDouble("field3");
 
+                String dataPostarii = currentEarthquake.getString("created_at");
+
                 // Extract the value for the key called "place"
                 //String location = properties.getString("place");
                 String location = currentEarthquake.getString("entry_id");

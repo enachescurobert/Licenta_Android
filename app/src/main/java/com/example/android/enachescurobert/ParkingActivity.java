@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.quakereport;
+package com.example.android.enachescurobert;
 
 import android.app.LoaderManager;
 import android.app.LoaderManager.LoaderCallbacks;
@@ -40,18 +40,18 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class EarthquakeActivity extends AppCompatActivity
-        implements LoaderCallbacks<List<Earthquake>>,
+public class ParkingActivity extends AppCompatActivity
+        implements LoaderCallbacks<List<Parking>>,
         SharedPreferences.OnSharedPreferenceChangeListener {
 
-    private static final String LOG_TAG = EarthquakeActivity.class.getName();
+    private static final String LOG_TAG = ParkingActivity.class.getName();
 
-    /** URL for earthquake data from the USGS dataset */
+    /** URL for parkingSpot data from the USGS dataset */
     private static final String USGS_REQUEST_URL =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query";
+            "https://parkingSpot.usgs.gov/fdsnws/event/1/query";
 
     private static final String USGS_REQUEST_URL_TWO =
-            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10";
+            "https://parkingSpot.usgs.gov/fdsnws/event/1/query?format=geojson&orderby=time&minmag=6&limit=10";
 
     private static final String THINGSPEAK_DUMMY_SENSOR =
             "https://thingspeak.com/channels/54807/field/1.json";
@@ -61,13 +61,13 @@ public class EarthquakeActivity extends AppCompatActivity
 
 
     /**
-     * Constant value for the earthquake loader ID. We can choose any integer.
+     * Constant value for the parkingSpot loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
     private static final int EARTHQUAKE_LOADER_ID = 1;
 
-    /** Adapter for the list of earthquakes */
-    private EarthquakeAdapter mAdapter;
+    /** Adapter for the list of parkingSpots */
+    private ParkingAdapter mAdapter;
 
     /** TextView that is displayed when the list is empty */
     private TextView mEmptyStateTextView;
@@ -75,20 +75,20 @@ public class EarthquakeActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.earthquake_activity);
+        setContentView(R.layout.parking_spot_activity);
 
         // Find a reference to the {@link ListView} in the layout
-        ListView earthquakeListView = (ListView) findViewById(R.id.list);
+        ListView parkingSpotListView = (ListView) findViewById(R.id.list);
 
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
-        earthquakeListView.setEmptyView(mEmptyStateTextView);
+        parkingSpotListView.setEmptyView(mEmptyStateTextView);
 
-        // Create a new adapter that takes an empty list of earthquakes as input
-        mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
+        // Create a new adapter that takes an empty list of parkingSpots as input
+        mAdapter = new ParkingAdapter(this, new ArrayList<Parking>());
 
         // Set the adapter on the {@link ListView}
         // so the list can be populated in the user interface
-        earthquakeListView.setAdapter(mAdapter);
+        parkingSpotListView.setAdapter(mAdapter);
 
         // Obtain a reference to the SharedPreferences file for this app
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -97,18 +97,18 @@ public class EarthquakeActivity extends AppCompatActivity
         prefs.registerOnSharedPreferenceChangeListener(this);
 
         // Set an item click listener on the ListView, which sends an intent to a web browser
-        // to open a website with more information about the selected earthquake.
-        earthquakeListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // to open a website with more information about the selected parkingSpot.
+        parkingSpotListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // Find the current earthquake that was clicked on
-                Earthquake currentEarthquake = mAdapter.getItem(position);
+                // Find the current parkingSpot that was clicked on
+                Parking currentParking = mAdapter.getItem(position);
 
                 // Convert the String URL into a URI object (to pass into the Intent constructor)
-                Uri earthquakeUri = Uri.parse(currentEarthquake.getUrl());
+                Uri parkingSpotUri = Uri.parse(currentParking.getUrl());
 
-                // Create a new intent to view the earthquake URI
-                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, earthquakeUri);
+                // Create a new intent to view the parkingSpot URI
+                Intent websiteIntent = new Intent(Intent.ACTION_VIEW, parkingSpotUri);
 
                 // Send the intent to launch a new activity
                 startActivity(websiteIntent);
@@ -183,7 +183,7 @@ public class EarthquakeActivity extends AppCompatActivity
     }
 
     @Override
-    public Loader<List<Earthquake>> onCreateLoader(int i, Bundle bundle) {
+    public Loader<List<Parking>> onCreateLoader(int i, Bundle bundle) {
 
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
         String minMagnitude = sharedPrefs.getString(
@@ -204,33 +204,33 @@ public class EarthquakeActivity extends AppCompatActivity
         uriBuilder.appendQueryParameter("orderby", orderBy);
 
 
-        return new EarthquakeLoader(this, THINGSPEAK_LICENTA);
+        return new ParkingLoader(this, THINGSPEAK_LICENTA);
 
-//        return new EarthquakeLoader(this, THINGSPEAK_DUMMY_SENSOR);
+//        return new ParkingLoader(this, THINGSPEAK_DUMMY_SENSOR);
     }
 
     @Override
-    public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> earthquakes) {
+    public void onLoadFinished(Loader<List<Parking>> loader, List<Parking> parkingSpots) {
         // Hide loading indicator because the data has been loaded
         View loadingIndicator = findViewById(R.id.loading_indicator);
         loadingIndicator.setVisibility(View.GONE);
 
-        // Set empty state text to display "No earthquakes found."
-        mEmptyStateTextView.setText(R.string.no_earthquakes);
+        // Set empty state text to display "No parkingSpots found."
+        mEmptyStateTextView.setText(R.string.no_parkingSpots);
 
-        // Clear the adapter of previous earthquake data
+        // Clear the adapter of previous parkingSpot data
         //mAdapter.clear();
         
-        // If there is a valid list of {@link Earthquake}s, then add them to the adapter's
+        // If there is a valid list of {@link Parking}s, then add them to the adapter's
         // data set. This will trigger the ListView to update.
-        if (earthquakes != null && !earthquakes.isEmpty()) {
-            //mAdapter.addAll(earthquakes);
-            mAdapter.addAll(earthquakes);
+        if (parkingSpots != null && !parkingSpots.isEmpty()) {
+            //mAdapter.addAll(parkingSpots);
+            mAdapter.addAll(parkingSpots);
         }
     }
 
     @Override
-    public void onLoaderReset(Loader<List<Earthquake>> loader) {
+    public void onLoaderReset(Loader<List<Parking>> loader) {
         // Loader reset, so we can clear out our existing data.
         mAdapter.clear();
     }

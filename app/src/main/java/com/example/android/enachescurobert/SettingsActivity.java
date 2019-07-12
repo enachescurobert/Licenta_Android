@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.quakereport;
+package com.example.android.enachescurobert;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,7 +31,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity);
     }
 
-    public static class EarthquakePreferenceFragment extends PreferenceFragment
+    public static class ParkingPreferenceFragment extends PreferenceFragment
             implements Preference.OnPreferenceChangeListener {
 
         @Override

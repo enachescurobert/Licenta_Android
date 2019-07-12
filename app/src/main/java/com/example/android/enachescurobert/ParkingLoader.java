@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.quakereport;
+package com.example.android.enachescurobert;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
@@ -21,24 +21,24 @@ import android.content.Context;
 import java.util.List;
 
 /**
- * Loads a list of earthquakes by using an AsyncTask to perform the
+ * Loads a list of parkingSpots by using an AsyncTask to perform the
  * network request to the given URL.
  */
-public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
+public class ParkingLoader extends AsyncTaskLoader<List<Parking>> {
 
     /** Tag for log messages */
-    private static final String LOG_TAG = EarthquakeLoader.class.getName();
+    private static final String LOG_TAG = ParkingLoader.class.getName();
 
     /** Query URL */
     private String mUrl;
 
     /**
-     * Constructs a new {@link EarthquakeLoader}.
+     * Constructs a new {@link ParkingLoader}.
      *
      * @param context of the activity
      * @param url to load data from
      */
-    public EarthquakeLoader(Context context, String url) {
+    public ParkingLoader(Context context, String url) {
         super(context);
         mUrl = url;
     }
@@ -52,13 +52,13 @@ public class EarthquakeLoader extends AsyncTaskLoader<List<Earthquake>> {
      * This is on a background thread.
      */
     @Override
-    public List<Earthquake> loadInBackground() {
+    public List<Parking> loadInBackground() {
         if (mUrl == null) {
             return null;
         }
 
-        // Perform the network request, parse the response, and extract a list of earthquakes.
-        List<Earthquake> earthquakes = QueryUtils.fetchEarthquakeData(mUrl);
-        return earthquakes;
+        // Perform the network request, parse the response, and extract a list of parkingSpots.
+        List<Parking> parkingSpots = QueryUtils.fetchParkingData(mUrl);
+        return parkingSpots;
     }
 }

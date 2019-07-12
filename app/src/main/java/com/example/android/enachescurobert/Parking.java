@@ -13,35 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.quakereport;
+package com.example.android.enachescurobert;
 
 /**
- * An {@link Earthquake} object contains information related to a single earthquake.
+ * An {@link Parking} object contains information related to a single parkingSpot.
  */
-public class Earthquake {
+public class Parking {
 
-    /** Magnitude of the earthquake */
+    /** Magnitude of the parkingSpot */
     private double mMagnitude;
 
-    /** Location of the earthquake */
+    /** Location of the parkingSpot */
     private String mLocation;
 
-    /** Time of the earthquake */
+    /** Time of the parkingSpot */
     private long mTimeInMilliseconds;
 
-    /** Website URL of the earthquake */
+    /** Website URL of the parkingSpot */
     private String mUrl;
 
     /**
-     * Constructs a new {@link Earthquake} object.
+     * Constructs a new {@link Parking} object.
      *
-     * @param magnitude is the magnitude (size) of the earthquake
-     * @param location is the location where the earthquake happened
+     * @param magnitude is the magnitude (size) of the parkingSpot
+     * @param location is the location where the parkingSpot happened
      * @param timeInMilliseconds is the time in milliseconds (from the Epoch) when the
-     *                           earthquake happened
-     * @param url is the website URL to find more details about the earthquake
+     *                           parkingSpot happened
+     * @param url is the website URL to find more details about the parkingSpot
      */
-    public Earthquake(double magnitude, String location, long timeInMilliseconds, String url) {
+    public Parking(double magnitude, String location, long timeInMilliseconds, String url) {
         mMagnitude = magnitude;
         mLocation = location;
         mTimeInMilliseconds = timeInMilliseconds;
@@ -49,28 +49,28 @@ public class Earthquake {
     }
 
     /**
-     * Returns the magnitude of the earthquake.
+     * Returns the magnitude of the parkingSpot.
      */
     public double getMagnitude() {
         return mMagnitude;
     }
 
     /**
-     * Returns the location of the earthquake.
+     * Returns the location of the parkingSpot.
      */
     public String getLocation() {
         return mLocation;
     }
 
     /**
-     * Returns the time of the earthquake.
+     * Returns the time of the parkingSpot.
      */
     public long getTimeInMilliseconds() {
         return mTimeInMilliseconds;
     }
 
     /**
-     * Returns the website URL to find more information about the earthquake.
+     * Returns the website URL to find more information about the parkingSpot.
      */
     public String getUrl() {
         return mUrl;

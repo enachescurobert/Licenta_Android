@@ -4,7 +4,7 @@ android {
     compileSdkVersion 28
 
     defaultConfig {
-        applicationId "com.example.android.quakereport"
+        applicationId "com.example.android.enachescurobert"
         minSdkVersion 15
         targetSdkVersion 28
         versionCode 1

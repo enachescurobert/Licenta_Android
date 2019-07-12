@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.quakereport;
+package com.example.android.enachescurobert;
 
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
@@ -31,13 +31,13 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * An {@link EarthquakeAdapter} knows how to create a list item layout for each earthquake
- * in the data source (a list of {@link Earthquake} objects).
+ * An {@link ParkingAdapter} knows how to create a list item layout for each parkingSpot
+ * in the data source (a list of {@link Parking} objects).
  *
  * These list item layouts will be provided to an adapter view like ListView
  * to be displayed to the user.
  */
-public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
+public class ParkingAdapter extends ArrayAdapter<Parking> {
 
     /**
      * The part of the location string from the USGS service that we use to determine
@@ -46,18 +46,18 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     private static final String LOCATION_SEPARATOR = " of ";
 
     /**
-     * Constructs a new {@link EarthquakeAdapter}.
+     * Constructs a new {@link ParkingAdapter}.
      *
      * @param context of the app
-     * @param earthquakes is the list of earthquakes, which is the data source of the adapter
+     * @param parkingSpots is the list of parkingSpots, which is the data source of the adapter
      */
-    public EarthquakeAdapter(Context context, List<Earthquake> earthquakes) {
-        super(context, 0, earthquakes);
+    public ParkingAdapter(Context context, List<Parking> parkingSpots) {
+        super(context, 0, parkingSpots);
     }
 
     /**
-     * Returns a list item view that displays information about the earthquake at the given position
-     * in the list of earthquakes.
+     * Returns a list item view that displays information about the parkingSpot at the given position
+     * in the list of parkingSpots.
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -66,19 +66,19 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.earthquake_list_item, parent, false);
+                    R.layout.parking_spot_list_item, parent, false);
         }
 
-        // Find the earthquake at the given position in the list of earthquakes
-        Earthquake currentEarthquake = getItem(position);
+        // Find the parkingSpot at the given position in the list of parkingSpots
+        Parking currentParking = getItem(position);
 
         // Find the TextView with view ID magnitude
         TextView magnitudeView = (TextView) listItemView.findViewById(R.id.magnitude);
         // Format the magnitude to show 1 decimal place
-        String formattedMagnitude = formatMagnitude(currentEarthquake.getMagnitude());
-        // Display the magnitude of the current earthquake in that TextView
+        String formattedMagnitude = formatMagnitude(currentParking.getMagnitude());
+        // Display the magnitude of the current parkingSpot in that TextView
 
-        double freeOrBusy = currentEarthquake.getMagnitude();
+        double freeOrBusy = currentParking.getMagnitude();
         //Log.v("sa dea dracii", "freeOrBusy = " + freeOrBusy);
 
         //float freeOrOpen = Float.parseFloat(formattedMagnitude);
@@ -94,14 +94,14 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
         // Set the proper background color on the magnitude circle.
         // Fetch the background from the TextView, which is a GradientDrawable.
         GradientDrawable magnitudeCircle = (GradientDrawable) magnitudeView.getBackground();
-        // Get the appropriate background color based on the current earthquake magnitude
-        int magnitudeColor = getMagnitudeColor(currentEarthquake.getMagnitude());
+        // Get the appropriate background color based on the current parkingSpot magnitude
+        int magnitudeColor = getMagnitudeColor(currentParking.getMagnitude());
         // Set the color on the magnitude circle
         magnitudeCircle.setColor(magnitudeColor);
 
-        // Get the original location string from the Earthquake object,
+        // Get the original location string from the Parking object,
         // which can be in the format of "5km N of Cairo, Egypt" or "Pacific-Antarctic Ridge".
-        String originalLocation = currentEarthquake.getLocation();
+        String originalLocation = currentParking.getLocation();
 
         // If the original location string (i.e. "5km N of Cairo, Egypt") contains
         // a primary location (Cairo, Egypt) and a location offset (5km N of that city)
@@ -130,29 +130,29 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
 
         // Find the TextView with view ID location
         TextView primaryLocationView = (TextView) listItemView.findViewById(R.id.primary_location);
-        // Display the location of the current earthquake in that TextView
+        // Display the location of the current parkingSpot in that TextView
         primaryLocationView.setText(primaryLocation);
 
         // Find the TextView with view ID location offset
         TextView locationOffsetView = (TextView) listItemView.findViewById(R.id.location_offset);
-        // Display the location offset of the current earthquake in that TextView
+        // Display the location offset of the current parkingSpot in that TextView
         locationOffsetView.setText(locationOffset);
 
-        // Create a new Date object from the time in milliseconds of the earthquake
-        Date dateObject = new Date(currentEarthquake.getTimeInMilliseconds());
+        // Create a new Date object from the time in milliseconds of the parkingSpot
+        Date dateObject = new Date(currentParking.getTimeInMilliseconds());
 
         // Find the TextView with view ID date
         TextView dateView = (TextView) listItemView.findViewById(R.id.date);
         // Format the date string (i.e. "Mar 3, 1984")
         String formattedDate = formatDate(dateObject);
-        // Display the date of the current earthquake in that TextView
+        // Display the date of the current parkingSpot in that TextView
         dateView.setText(formattedDate);
 
         // Find the TextView with view ID time
         TextView timeView = (TextView) listItemView.findViewById(R.id.time);
         // Format the time string (i.e. "4:30PM")
         String formattedTime = formatTime(dateObject);
-        // Display the time of the current earthquake in that TextView
+        // Display the time of the current parkingSpot in that TextView
         timeView.setText(formattedTime);
 
         // Return the list item view that is now showing the appropriate data
@@ -160,9 +160,9 @@ public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {
     }
 
     /**
-     * Return the color for the magnitude circle based on the intensity of the earthquake.
+     * Return the color for the magnitude circle based on the intensity of the parkingSpot.
      *
-     * @param magnitude of the earthquake
+     * @param magnitude of the parkingSpot
      */
     private int getMagnitudeColor(double magnitude) {
         int magnitudeColorResourceId;

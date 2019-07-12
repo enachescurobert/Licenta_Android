@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.quakereport;
+package com.example.android.enachescurobert;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Helper methods related to requesting and receiving earthquake data from USGS.
+ * Helper methods related to requesting and receiving parkingSpot data from USGS.
  */
 public final class QueryUtils {
 
@@ -50,9 +50,9 @@ public final class QueryUtils {
     }
 
     /**
-     * Query the USGS dataset and return a list of {@link Earthquake} objects.
+     * Query the USGS dataset and return a list of {@link Parking} objects.
      */
-    public static List<Earthquake> fetchEarthquakeData(String requestUrl) {
+    public static List<Parking> fetchParkingData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -64,11 +64,11 @@ public final class QueryUtils {
             Log.e(LOG_TAG, "Problem making the HTTP request.", e);
         }
 
-        // Extract relevant fields from the JSON response and create a list of {@link Earthquake}s
-        List<Earthquake> earthquakes = extractFeatureFromJson(jsonResponse);
+        // Extract relevant fields from the JSON response and create a list of {@link Parking}s
+        List<Parking> parkingSpots = extractFeatureFromJson(jsonResponse);
 
-        // Return the list of {@link Earthquake}s
-        return earthquakes;
+        // Return the list of {@link Parking}s
+        return parkingSpots;
     }
 
     /**
@@ -113,7 +113,7 @@ public final class QueryUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving the parkingSpot JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
@@ -147,17 +147,17 @@ public final class QueryUtils {
     }
 
     /**
-     * Return a list of {@link Earthquake} objects that has been built up from
+     * Return a list of {@link Parking} objects that has been built up from
      * parsing the given JSON response.
      */
-    private static List<Earthquake> extractFeatureFromJson(String earthquakeJSON) {
+    private static List<Parking> extractFeatureFromJson(String parkingSpotJSON) {
         // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(earthquakeJSON)) {
+        if (TextUtils.isEmpty(parkingSpotJSON)) {
             return null;
         }
 
-        // Create an empty ArrayList that we can start adding earthquakes to
-        List<Earthquake> earthquakes = new ArrayList<>();
+        // Create an empty ArrayList that we can start adding parkingSpots to
+        List<Parking> parkingSpots = new ArrayList<>();
 
         // Try to parse the JSON response string. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -165,40 +165,40 @@ public final class QueryUtils {
         try {
 
             // Create a JSONObject from the JSON response string
-            JSONObject baseJsonResponse = new JSONObject(earthquakeJSON);
+            JSONObject baseJsonResponse = new JSONObject(parkingSpotJSON);
 
             // Extract the JSONArray associated with the key called "features",
-            // which represents a list of features (or earthquakes).
-            //JSONArray earthquakeArray = baseJsonResponse.getJSONArray("features");
-            JSONArray earthquakeArray = baseJsonResponse.getJSONArray("feeds");
+            // which represents a list of features (or parkingSpots).
+            //JSONArray parkingSpotArray = baseJsonResponse.getJSONArray("features");
+            JSONArray parkingSpotArray = baseJsonResponse.getJSONArray("feeds");
 
 
-            // For each earthquake in the earthquakeArray, create an {@link Earthquake} object
-//            for (int i = 0; i < earthquakeArray.length(); i++) {
+            // For each parkingSpot in the parkingSpotArray, create an {@link Parking} object
+//            for (int i = 0; i < parkingSpotArray.length(); i++) {
 
-                // Get a single earthquake at position i within the list of earthquakes
+                // Get a single parkingSpot at position i within the list of parkingSpots
 
-                int lastEntry = earthquakeArray.length();
+                int lastEntry = parkingSpotArray.length();
 
-                JSONObject currentEarthquake = earthquakeArray.getJSONObject(lastEntry - 1);
+                JSONObject currentParking = parkingSpotArray.getJSONObject(lastEntry - 1);
 
-                // For a given earthquake, extract the JSONObject associated with the
+                // For a given parkingSpot, extract the JSONObject associated with the
                 // key called "properties", which represents a list of all properties
-                // for that earthquake.
-                //JSONObject properties = currentEarthquake.getJSONObject("properties");
+                // for that parkingSpot.
+                //JSONObject properties = currentParking.getJSONObject("properties");
 
                 // Extract the value for the key called "mag"
-                double magnitude = currentEarthquake.getDouble("field1");
+                double magnitude = currentParking.getDouble("field1");
 
-                double magnitude2 = currentEarthquake.getDouble("field2");
+                double magnitude2 = currentParking.getDouble("field2");
 
-                double magnitude3 = currentEarthquake.getDouble("field3");
+                double magnitude3 = currentParking.getDouble("field3");
 
-                String dataPostarii = currentEarthquake.getString("created_at");
+                String dataPostarii = currentParking.getString("created_at");
 
                 // Extract the value for the key called "place"
                 //String location = properties.getString("place");
-                String location = currentEarthquake.getString("entry_id");
+                String location = currentParking.getString("entry_id");
                 String locUnu = "Loc de parcare 1";
                 String locDoi = "Loc de parcare 2";
                 String locTrei = "Loc de parcare 3";
@@ -212,17 +212,17 @@ public final class QueryUtils {
                 //String url = properties.getString("url");
                 String url = "https://play.google.com/store/apps/developer?id=Enachescu+Robert";
 
-                // Create a new {@link Earthquake} object with the magnitude, location, time,
+                // Create a new {@link Parking} object with the magnitude, location, time,
                 // and url from the JSON response.
-                Earthquake earthquake = new Earthquake(magnitude, locUnu, time, url);
-                Earthquake earthquake2 = new Earthquake(magnitude2, locDoi, time, url);
-                Earthquake earthquake3 = new Earthquake(magnitude3, locTrei, time, url);
+                Parking parkingSpot = new Parking(magnitude, locUnu, time, url);
+                Parking parkingSpot2 = new Parking(magnitude2, locDoi, time, url);
+                Parking parkingSpot3 = new Parking(magnitude3, locTrei, time, url);
 
 
-            // Add the new {@link Earthquake} to the list of earthquakes.
-                earthquakes.add(earthquake);
-                earthquakes.add(earthquake2);
-                earthquakes.add(earthquake3);
+            // Add the new {@link Parking} to the list of parkingSpots.
+                parkingSpots.add(parkingSpot);
+                parkingSpots.add(parkingSpot2);
+                parkingSpots.add(parkingSpot3);
 
 //            }
 
@@ -230,11 +230,11 @@ public final class QueryUtils {
             // If an error is thrown when executing any of the above statements in the "try" block,
             // catch the exception here, so the app doesn't crash. Print a log message
             // with the message from the exception.
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the parkingSpot JSON results", e);
         }
 
-        // Return the list of earthquakes
-        return earthquakes;
+        // Return the list of parkingSpots
+        return parkingSpots;
     }
 
 }
